@@ -1,0 +1,123 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>mY!cook</title>
+<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:300' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Joti+One' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Sanchez' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/static/css/pure-min.css">
+<link rel="stylesheet" href="/static/css/main.css">  
+<style>
+@font-face {
+  font-family: 'Amienne';
+  src: url('Amienne.ttf');
+}
+.hero h1{
+	font-size = 400;
+font-family: 'Amienne', serif;
+}
+#menu .pure-menu-heading{
+	font-family: 'Amienne', serif;
+	}
+</style>
+<script src="/static/js/ajf8ggy.js"></script>
+
+<script>
+    try { Typekit.load(); } catch (e) {}
+</script>
+<script language="Javascript" type="text/javascript">
+ 
+        function onlyAlphabets(e, t) {
+            try {
+                if (window.event) {
+                    var charCode = window.event.keyCode;
+                }
+                else if (e) {
+                    var charCode = e.which;
+                }
+                else { return true; }
+                if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) ||charCode == 13 || charCode == 32)
+                    return true;
+                else
+                    return false;
+            }
+            catch (err) {
+                alert(err.Description);
+            }
+        }
+ 
+    </script>
+</head>
+<body>
+
+    <div class="pure-g-r " id="layout">
+        <a href="#menu" id="menuLink" class="pure-menu-link">
+    <img src="/static/img/navicon-png2x.png" width="20"
+         alt="Menu toggle">
+</a>
+
+<div class="pure-u" id="menu">
+    <div class="pure-menu pure-menu-open">
+        <a class="pure-menu-heading" href="/">my!cook</a>
+
+        <ul>
+          
+            <li class="pure-menu-selected">
+                <a href="/">Search</a>
+            </li>
+          
+            <li class=" ">
+                <a href="/where">Where do I eat?</a>
+            </li>
+          
+            <li class=" ">
+                <a href="/how">Help me cook</a>
+            </li>
+          
+            <li class=" menu-item-divided">
+                <a href="/thanks">Enjoy!</a>
+            </li>
+
+        </ul>
+    </div>
+</div>
+
+<div class="pure-u" id="main">
+
+<div class="hero">
+    <h1 class="pure-u-1">my!cook</h1>
+    {% if err %}
+    <div>
+    <style scoped>
+        .pure-button-warning{
+            color: white;
+            border-radius: 4px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+        }
+        .pure-button-warning {
+            background: rgb(223, 117, 20); /* this is an orange */
+        }
+    </style>
+    <button class="pure-button pure-button-warning">{{ err }}</button>
+	</div>
+    {% endif %}
+    <h2 class="pure-u-3-4 l-centered">Have the ingredients, but not sure what to cook? <br>
+    Well, we can help!</h2>
+    
+    <div class="hero-cta pure-u-3-4">
+		<form class="pure-form" action="/" method="post">
+			{% csrf_token %}
+			<input class="pure-input-2-3" type="text" name="search_key" placeholder="Type your ingredients here separated by a space! Try, Curd NOT Butter!" onkeypress="return onlyAlphabets(event,this);"><br>
+			<br>
+			<button class="pure-button pure-button-primary">Surprise Me!</button>
+		 </form>
+    </div>
+</div>
+ <script src="/static/js/rainbow.js"></script>
+</body>
+</html>
+

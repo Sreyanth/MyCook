@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>mY!cook</title>
+
+<link rel="stylesheet" href="/static/css/pure-min.css">
+<link rel="stylesheet" href="/static/css/small_main.css">
+<style>
+@font-face {
+  font-family: 'Amienne';
+  src: url('Amienne.ttf');
+}
+.hero h1{
+	font-size = 400;
+font-family: 'Amienne', serif;
+}
+#menu .pure-menu-heading{
+	font-family: 'Amienne', serif;
+	}
+</style>
+<script src="/static/js/ajf8ggy.js"></script>
+<script>
+    try { Typekit.load(); } catch (e) {}
+</script>
+<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    <script type='text/javascript'>
+      google.load('visualization', '1', {packages:['gauge']});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Label', 'Value'],
+          ['Sweet', parseInt(parseFloat({{ flavors.Sweet }}) * 2000)],
+          ['Sour', parseInt(parseFloat({{ flavors.Sour }}) * 2000)],
+          ['Salty', parseInt(parseFloat({{ flavors.Salty }}) * 4000)]
+        ]);
+
+        var options = {
+          width: 400, height: 120,
+          redFrom: 70, redTo: 100,
+          yellowFrom:50, yellowTo: 70,
+          minorTicks: 5
+        };
+
+        var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+</head>
+<body>
+
+    <div class="pure-g-r " id="layout">
+        <a href="#menu" id="menuLink" class="pure-menu-link">
+    <img src="/static/img/navicon-png2x.png" width="20"
+         alt="Menu toggle">
+</a>
+
+<div class="pure-u" id="menu">
+    <div class="pure-menu pure-menu-open">
+        <a class="pure-menu-heading" href="/">mY!Cook</a>
+
+        <ul>
+          
+            <li class=" ">
+                <a href="/">Search</a>
+            </li>
+          
+            <li class=" ">
+                <a href="/where">Where do I eat?</a>
+            </li>
+          
+            <li class="pure-menu-selected">
+                <a href="/how">Help me cook</a>
+            </li>
+          
+            <li class=" menu-item-divided">
+                <a href="/thanks">Enjoy!</a>
+            </li>
+
+        </ul>
+    </div>
+</div>
+
+<div class="pure-u" id="main">
+<div class="header pure-u-1">
+    <h1 class="pure-u-1">{{ name }}</h1>  
+</div>
+<br>
+	<div class="content pure-u-1">
+		<div class="pure-g-r">
+			<div class="pure-u-3-5">
+				<h3>
+				<img src={{ image }} width = 450 alt="{{ name }}">
+				</h3>
+				<h3>Flavors</h3>
+				<div id='chart_div'></div>
+								
+				{% if youtube %}
+				<h3>Related Videos</h3>
+				<iframe width="450" height="253" src="http://www.youtube.com/embed/{{ youtube }}" frameborder="0" allowfullscreen></iframe>
+				{% endif %}
+				{% if answers %}
+				<h3>See what others asked about this recipe</h3>
+				<ul>
+				{% for answer in answers %}
+					<li><a href={{ answer.Link }}>{{ answer.Subject }}</a></li>
+				{% endfor %}
+				</ul>
+				{% endif %}
+			</div>
+			<div class="pure-u-2-5">
+				<h3>Ingredients</h3>
+				<ul>
+					{% for line in ingredients %}
+					<li>{{ line }}</li>
+					{% endfor %}
+				</ul>
+				<strong>Rating:</strong> {{ rating }}<br>
+				<strong>Serves:</strong> {{ serves }}<br>
+				{% if type %}
+				<strong>Type:</strong> {{ type }}<br>
+				{% endif %}
+				{% if estimated %}
+				<strong>Estimated Time:</strong> {{ totalTimeInSeconds }} seconds<br>
+				{% endif %}
+				<br>
+				<a class="pure-button pure-button-primary" href={{ source.sourceRecipeUrl }}>How to?</a>
+				<a class="pure-button pure-button-primary" href="/where/">Or eat nearby!</a>
+				<h3>Recommendations</h3>
+				<a class="pure-button pure-button-primary" href="/enjoy/">Cool, But should I eat this?</a>
+				{% if nutrition%}
+				<h3>Nutritional Values</h3>
+				<table class="pure-table">
+					<thead>
+					<tr><th>Description</th><th>Value</th><th>Unit</th></tr>
+					</thead>
+					<tbody>
+				{% for item in nutrition %}
+					<tr><td>{{ item.description }}</td><td>{{ item.value }}</td><td>{{ item.unit.abbreviation }}</td></tr>
+				{% endfor %}
+					</tbody>
+				</table>
+				{% endif %}
+			</div>
+			<div class="pure-u-1-5">
+				
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
+
